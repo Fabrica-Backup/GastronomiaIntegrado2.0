@@ -66,14 +66,14 @@ function postJson() {
     } else {
         var urlData = "http://localhost:8000/api/ingredientes/edit/" + id + "";
     }
-
+    console.log(form.serializeArray())
     $.ajax({
         type: "POST",
         url: urlData,
         dataType: "json",
         // contentType: "application/json; charset=utf-8",
         // headers: { "X-HTTP-Method-Override": "PUT" },
-        data: form.serialize(),
+        data: form.serializeArray(),
         success: function () {
             $('.aulas').modal("hide");
             swal({

@@ -135,13 +135,31 @@ function postAdd() {
     var formSoma = $('#formSomar');
     // seleciona o id do ingrediente 'hidden' localizado no html
     var idAdd = $('#idSoma').val();
-    console.log(formSoma.serialize())
+
+    var formSomaArray = formSoma.serializeArray();
+    $.each(jsonIngrediente, function (indexIngrediente, valIngrediente) {
+        if (valIngrediente.id_ingrediente == idAdd) {
+            formSomaArray.push({
+                name: 'nome_ingrediente',
+                value: '' + valIngrediente.nome_ingrediente + ''
+            }, {
+                name: 'quantidade_calorica_ingrediente',
+                value: '' + valIngrediente.quantidade_calorica_ingrediente + ''
+            }, {
+                name: 'aproveitamento_ingrediente',
+                value: '' + valIngrediente.aproveitamento_ingrediente + ''
+            }, {
+                name: 'id_unidade_medida',
+                value: '' + valIngrediente.id_unidade_medida + ''
+            })
+        }
+    })
+
     $.ajax({
         type: "POST",
         url: "http://localhost:8000/api/ingredientes/edit/" + idAdd + "",
         dataType: "json",
-        data: formSoma.serialize(),
-        contentType: "application/json; charset=utf-8",
+        data: formSomaArray,
 
         success: function () {
             $('#somar').modal("hide");
@@ -249,12 +267,32 @@ function postSub() {
 
     // seleciona o id do ingrediente 'hidden' localizado no html
     var idSub = $('#idSub').val();
-    console.log(formSubtrair.serialize())
+
+    var formSubtrairArray = formSubtrair.serializeArray();
+
+    $.each(jsonIngrediente, function (indexIngrediente, valIngrediente) {
+        if (valIngrediente.id_ingrediente == idSub) {
+            formSubtrairArray.push({
+                name: 'nome_ingrediente',
+                value: '' + valIngrediente.nome_ingrediente + ''
+            }, {
+                name: 'quantidade_calorica_ingrediente',
+                value: '' + valIngrediente.quantidade_calorica_ingrediente + ''
+            }, {
+                name: 'aproveitamento_ingrediente',
+                value: '' + valIngrediente.aproveitamento_ingrediente + ''
+            }, {
+                name: 'id_unidade_medida',
+                value: '' + valIngrediente.id_unidade_medida + ''
+            })
+        }
+    })
+
     $.ajax({
         type: "POST",
         url: "http://localhost:8000/api/ingredientes/edit/" + idSub + "",
         dataType: "json",
-        data: formSubtrair.serialize(),
+        data: formSubtrairArray,
 
         success: function () {
             $('#subtrair').modal("hide");
