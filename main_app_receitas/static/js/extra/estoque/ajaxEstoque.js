@@ -61,9 +61,8 @@ function postJson() {
     console.log(form.serialize())
     // pega id do ingrediente (se vazio = POST, se tem algo = PUT)
     var id = $('.id').val();
-    console.log(id)
     if (typeof id === 'undefined') {
-        var urlData = "http://localhost:8000/api/ingredientes/create";
+        var urlData = "http://localhost:8000/api/ingredientes/create/";
     } else {
         var urlData = "http://localhost:8000/api/ingredientes/edit/" + id + "";
     }
@@ -94,7 +93,7 @@ function postJson() {
 };
 
 // ===================== DELETE ===================== //
-$('#lista-ingredientes').on('click', '.excluir_ing', function () {
+$('.lista-ingredientes').on('click', '.excluir_ing', function () {
     // seleciona a 'tr' do ingrediente especifico
     var thisTr = $(this).closest('tr');
     // pega a id do ingrediente localizado no html

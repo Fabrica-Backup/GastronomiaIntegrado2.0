@@ -49,7 +49,7 @@ function addButton() {
         // caso id_ingrediente localizado no html seja igual a id_ingrediente do json ingrediente, pega o json desse ingrediente e mostra na tela
         if (id_ingrediente == valIngrediente.id_ingrediente) {
             // cria input do id do ingrediente (para saber qual ingrediente dar o PUT) 'hidden'
-            var htmlIdIngrediente = '<input id="idSoma" hidden value="' + valIngrediente.id_ingrediente + '"></input>';
+            var htmlIdIngrediente = '<input name="id_ingrediente" id="idSoma" hidden value="' + valIngrediente.id_ingrediente + '"></input>';
 
             // cria html para mostrar a quantidade atual do ingrediente em estoque
             var htmlQuantidadeAtual = '<h5>' + valIngrediente.quantidade_estoque_ingrediente + '</h5>';
@@ -61,7 +61,7 @@ function addButton() {
             var htmlPrecoUnitario = '<h5>R$ ' + valIngrediente.valor_ingrediente + '</h5>';
 
             // aparecera na header da modal, "Acrescentar + <nome do ingrediente>"
-            var htmlNomeIngrediente = '<h4 class="modal-title ">Acrescentar ' + valIngrediente.nome_ingrediente + '</h4>';
+            var htmlNomeIngrediente = '<h4 class="modal-title">Acrescentar ' + valIngrediente.nome_ingrediente + '</h4>';
 
             // roda a lista de unidades e joga na classe UnidadeMedida do html (cria o dropdown com json de unidades)
             $.each(jsonUnidade, function (indexUnidade, valUnidade) {
@@ -75,7 +75,7 @@ function addButton() {
                     var htmlUnidadeMedida = '<h5 value="' + valIngrediente.id_unidade_medida + '">' + valUnidade.simbolo_unidade_medida + '</h5>';
 
                     // deixa selecionado a unidade do ingrediente ao abrir modal
-                    $('select[name="id_unidade_medida"] option[value="' + valIngrediente.id_unidade_medida + '"]').prop('selected', true);
+                    // $('select[name="id_unidade_medida"] option[value="' + valIngrediente.id_unidade_medida + '"]').prop('selected', true);
                     $('#formSomar').find('.unidadeTxt').html(htmlUnidadeMedida);
                 }
             })
@@ -118,11 +118,11 @@ function calculaPreco() {
     var unidadeTxt = $('.unidadeTxt').find('h5').text();
 
     if (qtdIngrediente == '' || precoTotal == '') {
-        $('.preco_unitario_atualizado').html('<h5>R$ 0</h5><input type="text" name="valor_unitario_ingrediente" value="0" hidden/>');
+        $('.preco_unitario_atualizado').html('<h5>R$ 0</h5><input type="text" name="valor_ingrediente" value="0" hidden/>');
     } else {
         // calcula e mostra na tela o valor do preco unitario atual
         var precoUnitarioAtual = (Math.round((qtdIngrediente / precoTotal) * 100) / 100);
-        var htmlPrecoUnitarioAtual = '<h5>R$ ' + precoUnitarioAtual + ' / ' + unidadeTxt + '</h5><input type="text" name="valor_unitario_ingrediente" value="' + precoUnitarioAtual + '" hidden/> ';
+        var htmlPrecoUnitarioAtual = '<h5>R$ ' + precoUnitarioAtual + ' / ' + unidadeTxt + '</h5><input type="text" name="valor_ingrediente" value="' + precoUnitarioAtual + '" hidden/> ';
         $('.preco_unitario_atualizado').html(htmlPrecoUnitarioAtual);
 
     }
@@ -141,6 +141,7 @@ function postAdd() {
         url: "http://localhost:8000/api/ingredientes/edit/" + idAdd + "",
         dataType: "json",
         data: formSoma.serialize(),
+        contentType: "application/json; charset=utf-8",
 
         success: function () {
             $('#somar').modal("hide");
@@ -179,7 +180,7 @@ $('.lista-ingredientes').on('click', '.subButton', function () {
         if (id_ingrediente == valIngrediente.id_ingrediente) {
 
             // cria input do id do ingrediente (para saber qual ingrediente dar o PUT) 'hidden'
-            var htmlIdIngrediente = '<input id="idSub" hidden value="' + valIngrediente.id_ingrediente + '"></input>';
+            var htmlIdIngrediente = '<input name="id_ingrediente" id="idSub" hidden value="' + valIngrediente.id_ingrediente + '"></input>';
 
             // aparecera na header da modal, "Subtrair + <nome do ingrediente>"
             var htmlNomeIngrediente = '<h4 class="modal-title ">Subtrair ' + valIngrediente.nome_ingrediente + '</h4>';

@@ -105,14 +105,14 @@ function search() {
                     $('<td>' + value.quantidade_estoque_ingrediente + '</td>').appendTo(htmlIngList);
 
                     $.each(jsonUnidade, function (indexUnidade, valUnidade) {
-                        if (valUnidade.id_unidade_medida == value.unidade_medida_id_unidade_medida) {
+                        if (valUnidade.id_unidade_medida == value.id_unidade_medida) {
                             $('<td>' + valUnidade.descricao_unidade_medida + '</td>').appendTo(htmlIngList);
                         }
                     })
 
                     $(botaoAdd).appendTo(htmlIngList);
                     $(botaoSubtract).appendTo(htmlIngList);
-                    $('<td><button class="editButton">Editar</button></td>').appendTo(htmlIngList);
+                    $('<td><button class="editar">Editar</button></td>').appendTo(htmlIngList);
                     $('<td><button type="button" class="btn btn-xs btn-danger excluir_ing"><i class="fa fa-trash"></i></button></td>').appendTo(htmlIngList)
                     $('.htmlIngList').append(htmlIngList);
                 }
@@ -145,7 +145,7 @@ function search() {
                     // cria uma lista
                     var htmlIngList = $('<tr class="searchList"></tr>');
                     $('<td><a href="#" class="hipertextColor" >' + value.nome_receita + '</a></td>').appendTo(htmlIngList);
-                    $('<td><button class="editButton">Editar</button></td>').appendTo(htmlIngList);
+                    $('<td><button class="editar">Editar</button></td>').appendTo(htmlIngList);
                     $('<td><button type="button" class="btn btn-xs btn-danger excluir"><i class="fa fa-trash"></i></button></td>').appendTo(htmlIngList)
                     $('.htmlIngList').append(htmlIngList);
                 }
