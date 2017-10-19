@@ -3,24 +3,29 @@ $(document).ready(function () {
     // armazena os objetos json de receitas, aulas, e unidade para ser usado em outros locais
     window.jsonReceita;
     window.jsonAula;
+    window.jsonAulaReceita;
 
     // verifica se foi dado get das receitas, aulas e periodo, caso nao tenha dado ele dará get aqui
     if (typeof jsonAula === 'undefined' || typeof jsonReceita === 'undefined' || typeof jsonPeriodo === 'undefined') {
-        // get da tabela de aulas
-        $.getJSON('http://localhost:8000/api/aula/list/', function (jsonObjectAula) {
+        // get da tabela de aulas 
+        $.getJSON('../js/testesJson/testeJsonAula.json', function (jsonObjectAula) {
             jsonAula = jsonObjectAula;
             // get da tabela de receitas
-            $.getJSON('http://localhost:8000/api/receita/list/', function (jsonObjectReceita) {
+            $.getJSON('../js/testesJson/testeJsonReceitas.json', function (jsonObjectReceita) {
                 jsonReceita = jsonObjectReceita;
-                getTabela(jsonAula, jsonReceita);
+                // get da tabela associativa aula_receita
+                $.getJSON('../js/testesJson/testeJsonAulaReceita.json', function (jsonObjectAulaReceita) {
+                    jsonAulaReceita = jsonObjectAulaReceita;
+                    getTabela(jsonAula, jsonReceita, jsonAulaReceita);
+                })
             })
         })
     } else {
-        getTabela(jsonAula, jsonReceita);
+        getTabela(jsonAula, jsonReceita, jsonAulaReceita);
     }
 })
 
-function getTabela(jsonAula, jsonReceita) {
+function getTabela(jsonAula, jsonReceita, jsonAulaReceita) {
     // geração de botoes
     var botaoExcluir = '<td><button type="button" class="btn btn-xs btn-danger excluir"><i class="fa fa-trash"></i></button></td>';
     var botaoEditar = '<td><button class="btn btn-xs editar" type="button"><i class="fa fa-edit"></i></button></td>';
@@ -28,41 +33,43 @@ function getTabela(jsonAula, jsonReceita) {
     var botaoAulaConcluida = '<td><button class="botaoAulaConcluida" type="button">Aula Concluida</button></td>';
     var botaoDetalhes = '<td><button type="button" class="btn btn-xs botaoDetalhes"><i class="fa fa-eye"></i></button></td>';
 
-    // roda a lista de aulas
     $.each(jsonAula, function (indexAula, valAula) {
+        $.each(jsonAulaReceita, function (indexAulaReceitas, valueAulaReceitas) {
+            if (valAula.id_aula == valueAulaReceitas.id_aula) {
+                // conta o numero de receitas na aula
+                var countReceitas = Object.keys(valueAulaReceitas.id_receita).length;
 
-        // conta o numero de receitas na aula
-        var countReceitas = Object.keys(valAula.receitas).length;
+                // cria a 'tr' de cada aula para ficar em formato de lista
+                var htmlList = $('<tr class="id-aula" data-id="' + valAula.id_aula + '"></tr>');
 
-        // cria a 'tr' de cada aula para ficar em formato de lista
-        var htmlList = $('<tr class="id-aula" data-id="' + valAula.id_aula + '"></tr>');
+                // cria as 'td' com os valores da aula E joga as 'td' dentro da 'tr' htmlList (<tr><td>  </td></tr>)
+                $('<td hidden class="id_aula">' + valAula.id_aula + '</td>').appendTo(htmlList);
+                $('<td class="dia_da_aula">' + valAula.data_aula + '</td>').appendTo(htmlList);
+                $('<td class="periodo">' + valAula.periodo_aula + '</td>').appendTo(htmlList);
+                $('<td class="num_receitas">' + countReceitas + '</td>').appendTo(htmlList);
 
-        // cria as 'td' com os valores da aula E joga as 'td' dentro da 'tr' htmlList (<tr><td>  </td></tr>)
-        $('<td hidden class="id_aula">' + valAula.id_aula + '</td>').appendTo(htmlList);
-        $('<td class="dia_da_aula">' + valAula.data_aula + '</td>').appendTo(htmlList);
-        $('<td class="periodo">' + valAula.periodo_aula + '</td>').appendTo(htmlList);
-        $('<td class="num_receitas">' + countReceitas + '</td>').appendTo(htmlList);
+                // joga os botoes detalhes e excluir dentro da 'tr'
+                $(botaoDetalhes).appendTo(htmlList);
+                $(botaoExcluir).appendTo(htmlList);
 
-        // joga os botoes detalhes e excluir dentro da 'tr'
-        $(botaoDetalhes).appendTo(htmlList);
-        $(botaoExcluir).appendTo(htmlList);
-
-        // se aula_agendada = false, a aula NAO ESTA agendada
-        if (valAula.aula_agendada == "false") {
-            $(botaoEditar).appendTo(htmlList);
-            $(botaoAgendarAula).appendTo(htmlList);
-            $(htmlList).appendTo('.listaAulasPlanejadas');
-        }
-        // se aula_agendada = true, aula ESTA planejada
-        if (valAula.aula_agendada == "true" && valAula.aula_concluida == "false") {
-            $(botaoAulaConcluida).appendTo(htmlList);
-            $(htmlList).appendTo('.listaAulasAgendadas');
-        }
-        // se aula_agendada = true E se aula_concluida = true, aula ESTA CONCLUIDA
-        if (valAula.aula_agendada == "true" && valAula.aula_concluida == "true") {
-            // .aulaConcluidaList esta localizado em aulas-concluidas.html
-            $(htmlList).appendTo('.aulaConcluidaList');
-        }
+                // se aula_agendada = false, a aula NAO ESTA agendada
+                if (valAula.aula_agendada == "false") {
+                    $(botaoEditar).appendTo(htmlList);
+                    $(botaoAgendarAula).appendTo(htmlList);
+                    $(htmlList).appendTo('.listaAulasPlanejadas');
+                }
+                // se aula_agendada = true, aula ESTA planejada
+                if (valAula.aula_agendada == "true" && valAula.aula_concluida == "false") {
+                    $(botaoAulaConcluida).appendTo(htmlList);
+                    $(htmlList).appendTo('.listaAulasAgendadas');
+                }
+                // se aula_agendada = true E se aula_concluida = true, aula ESTA CONCLUIDA
+                if (valAula.aula_agendada == "true" && valAula.aula_concluida == "true") {
+                    // .aulaConcluidaList esta localizado em aulas-concluidas.html
+                    $(htmlList).appendTo('.aulaConcluidaList');
+                }
+            }
+        })
     })
 }
 
@@ -223,7 +230,6 @@ $('#verAula').on('click', '.clonar', function () {
 })
 
 function jsonClone(objCloneStringfy) {
-    console.log(objCloneStringfy)
     swal({
             title: "Clonar esta aula?",
             type: "warning",

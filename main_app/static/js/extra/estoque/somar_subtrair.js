@@ -137,6 +137,7 @@ function postAdd() {
     var idAdd = $('#idSoma').val();
 
     var formSomaArray = formSoma.serializeArray();
+    console.log(formSomaArray)
     $.each(jsonIngrediente, function (indexIngrediente, valIngrediente) {
         if (valIngrediente.id_ingrediente == idAdd) {
             formSomaArray.push({
@@ -222,6 +223,8 @@ $('.lista-ingredientes').on('click', '.subButton', function () {
                     $('#formSubtrair').find('.unidadeTxtsub').html(htmlUnidadeMedida);
 
                     $('#formSubtrair').find('.unidadeTxt').html('<h5>' + valUnidade.simbolo_unidade_medida + '</h5>');
+
+                    return;
                 }
             })
 
@@ -237,6 +240,8 @@ $('.lista-ingredientes').on('click', '.subButton', function () {
 
             // abre a modal
             $('#subtrair').modal('show');
+
+            return;
         }
     })
     // MOTIVO DE DELETAR ESTA NO HTML
