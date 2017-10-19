@@ -117,7 +117,7 @@ function calculaPreco() {
     // pega a unidade (texto) da modal para mostrar ao lado do valor unitario atual
     var unidadeTxt = $('.unidadeTxt').find('h5').text();
 
-    if (qtdIngrediente == '' || precoTotal == '' || isNaN(precoTotal) || isNan(qtdIngrediente)) {
+    if (qtdIngrediente == '' || precoTotal == '' || isNaN(precoTotal) || isNaN(qtdIngrediente)) {
         $('.preco_unitario_atualizado').html('<h5>R$ 0</h5><input type="text" name="valor_ingrediente" value="0" hidden/>');
     } else {
         // calcula e mostra na tela o valor do preco unitario atual
