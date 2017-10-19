@@ -61,10 +61,26 @@ function postJson() {
     console.log(form.serialize())
     // pega id do ingrediente (se vazio = POST, se tem algo = PUT)
     var id = $('.id').val();
+
+    // serializa o formulario
+    var formArray = form.serializeArray();
+
     if (typeof id === 'undefined') {
         var urlData = "http://localhost:8000/api/ingredientes/create/";
     } else {
         var urlData = "http://localhost:8000/api/ingredientes/edit/" + id + "";
+
+        $.each(jsonIngrediente, function (indexIngrediente, valIngrediente) {
+            if (valIngrediente.id_ingrediente == id) {
+                formArray.push({
+                    name: 'valor_ingrediente',
+                    value: '' + valIngrediente.valor_ingrediente + ''
+                }, {
+                    name: 'quantidade_estoque_ingrediente',
+                    value: '' + valIngrediente.quantidade_estoque_ingrediente + ''
+                })
+            }
+        })
     }
     console.log(form.serializeArray())
     $.ajax({
@@ -73,7 +89,7 @@ function postJson() {
         dataType: "json",
         // contentType: "application/json; charset=utf-8",
         // headers: { "X-HTTP-Method-Override": "PUT" },
-        data: form.serializeArray(),
+        data: formArray,
         success: function () {
             $('.aulas').modal("hide");
             swal({

@@ -29,6 +29,7 @@ function validaUnidade(valueUnidade) {
 
     if (valueUnidade == '2') {
         $("#unidadeMedida option[value='1']").remove();
+        $("#unidadeMedida option[value='3']").remove();
         $("#unidadeMedida option[value='4']").remove();
         $("#unidadeMedida option[value='5']").remove();
     }
@@ -37,6 +38,7 @@ function validaUnidade(valueUnidade) {
         $("#unidadeMedida option[value='1']").remove();
         $("#unidadeMedida option[value='2']").remove();
         $("#unidadeMedida option[value='3']").remove();
+        $("#unidadeMedida option[value='5']").remove();
     }
 }
 

@@ -1,5 +1,5 @@
 // ========== VALIDAÇAO de ADICIONAR e EDITAR INGREDIENTE ========== //
-$('#adicionar-ingrediente').on('click', function() {
+$('#adicionar-ingrediente').on('click', function () {
 
     limpaMensagens();
     var ingrediente = obtemIngredienteDoFormulario();
@@ -28,25 +28,28 @@ function validaIngrediente(ingrediente) {
     var erros = [];
 
     if (ingrediente.nome.length == 0) {
-        erros.push("O NOME do ingrediente não pode estar em branco");
+        erros.push("O NOME do ingrediente NÃO pode estar em VAZIO");
     }
     if (ingrediente.calorias.length == 0) {
-        erros.push("A QUANTIDADE CALORICA não pode estar em branco");
+        erros.push("A QUANTIDADE CALORICA NÃO pode estar em VAZIO");
     }
     if (ingrediente.calorias < 0) {
-        erros.push("A QUANTIDADE CALORICA não pode ser negativo");
+        erros.push("A QUANTIDADE CALORICA NÃO pode ser NEGATIVO");
+    }
+    if (ingrediente.calorias >= 2000) {
+        erros.push("A QUANTIDADE CALORICA NÃO pode ser SUPERIOR a 2000");
     }
     if (isNaN(ingrediente.calorias)) {
         erros.push("A QUANTIDADE CALORICA deve conter NUMEROS APENAS");
     }
     if (ingrediente.aproveitamento.length == 0) {
-        erros.push("O APROVEITAMENTO não pode estar em branco");
+        erros.push("O APROVEITAMENTO NÃO pode estar em VAZIO");
     }
     if (ingrediente.aproveitamento < 0) {
-        erros.push("O APROVEITAMENTO não pode ser negativo");
+        erros.push("O APROVEITAMENTO NÃO pode ser NEGATIVO");
     }
     if (ingrediente.aproveitamento > 100) {
-        erros.push("O APROVEITAMENTO não pode ser superior a 100%");
+        erros.push("O APROVEITAMENTO NÃO pode ser SUPERIOR a 100%");
     }
     if (isNaN(ingrediente.aproveitamento)) {
         erros.push("O APROVEITAMENTO deve conter NUMEROS APENAS");
@@ -59,7 +62,7 @@ function exibeMensagensDeErro(erros) {
 
     ul.innerHTML = "";
 
-    erros.forEach(function(erro) {
+    erros.forEach(function (erro) {
         var li = document.createElement("li");
         li.textContent = erro;
         ul.appendChild(li);
