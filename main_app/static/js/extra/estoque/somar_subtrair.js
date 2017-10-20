@@ -290,8 +290,8 @@ function postSub() {
                 name: 'id_unidade_medida',
                 value: '' + valIngrediente.id_unidade_medida + ''
             }, {
-                name: 'valor_unidade',
-                value: '' + valIngrediente.valor_unidade + ''
+                name: 'valor_ingrediente',
+                value: '' + valIngrediente.valor_ingrediente + ''
             })
         }
     })
