@@ -2,7 +2,7 @@ $(function listarReceitas() {
 
     $.ajax({
         type: 'GET',
-        url: 'http://jsonstub.com/receita/lista',
+        url: 'http://localhost:8000/api/receita/list/',
         contentType: 'application/json',
         beforeSend: function (request) {
             request.setRequestHeader('JsonStub-User-Key', 'a4ed75a2-3733-4107-aacb-68a12165b258');
