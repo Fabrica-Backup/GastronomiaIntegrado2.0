@@ -3,9 +3,9 @@ $(document).ready(function () {
     window.jsonIngredientes;
     // garante que a tabela de aulas e ingredientes foi carregada
     if (typeof jsonAula === 'undefined' || typeof jsonIngredientes === 'undefined') {
-        $.getJSON('../js/testesJson/testeJsonAula.json', function (jsonObjectAula) {
+        $.getJSON(listAula, function (jsonObjectAula) {
             jsonAula = jsonObjectAula;
-            $.getJSON('../js/testesJson/testeJsonIngredientes.json', function (jsonObjectIngredientes) {
+            $.getJSON(listIngrediente, function (jsonObjectIngredientes) {
                 jsonIngredientes = jsonObjectIngredientes;
                 calculaValores();
             })

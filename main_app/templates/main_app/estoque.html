@@ -19,10 +19,7 @@
     <link rel="stylesheet" href="{% static '/css/sweetalert.css' %}">
     <link rel="stylesheet" href="{% static '/css/util.css' %}">
 
-
 </head>
-
-
 
 
 <body class="hold-transition skin-green sidebar-mini">
@@ -366,10 +363,11 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label ">Quantidade a Subtrair*</label>
                                 <div class="col-xs-3 col-sm-3">
-                                    <input type="text" name="quantidade_estoque_ingrediente" class="form-control qtdSubtrai" placeholder="Quantidade">
+                                    <input type="text" onkeyup="converteUnidadeSub()" class="form-control qtdSubtrai" placeholder="Quantidade">
                                 </div>
+                                <div class="subTransformado"></div>
                                 <div class="col-sm-2">
-                                    <select class="form-control" id="unidadeMedidaSubtrai" style="width: 100%;"></select>
+                                    <select class="form-control" id="unidadeMedidaSubtrai" onchange="converteUnidadeSub()" style="width: 100%;"></select>
                                 </div>
                             </div>
 
@@ -393,13 +391,14 @@
         <!-- FIM SUBTRAIR MODAL -->
 
     </div>
-
+    <script src="{% static 'js/urls.js' %}"></script>
     <!-- jQuery 2.2.3 -->
     <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
     <!-- Bootstrap 3.3.7 -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <!-- AdminLTE App -->
     <script src="{% static 'js/app.min.js' %}"></script>
+
     <script src="{% static 'js/sweetalert.min.js' %}"></script>
 
     <script src="{% static 'js/extra/estoque/add_editar_ingredientes.js' %}"></script>
@@ -410,6 +409,7 @@
     <script src="{% static 'js/extra/estoque/unidades.js' %}"></script>
     <script src="{% static 'js/extra/util.js' %}"></script>
     <script src="{% static 'js/search.js' %}"></script>
+
 </body>
 
 </html>

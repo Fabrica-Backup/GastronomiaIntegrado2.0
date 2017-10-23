@@ -9,9 +9,9 @@ function getIngredientes() {
     window.jsonUnidade;
     if (document.getElementById('filterIng').checked) {
         if (typeof jsonIngrediente === 'undefined' || typeof jsonUnidade === 'undefined') {
-            $.getJSON('../js/testesJson/testeJsonIngredientes.json', function (jsonObjectIngrediente) {
+            $.getJSON(listIngrediente, function (jsonObjectIngrediente) {
                 jsonIngrediente = jsonObjectIngrediente;
-                $.getJSON('../js/testesJson/testeJsonUnidade.json', function (jsonObjectUnidade) {
+                $.getJSON(listUnidadeMedida, function (jsonObjectUnidade) {
                     jsonUnidade = jsonObjectUnidade;
                     search();
                 })
@@ -27,7 +27,7 @@ function getReceitas() {
     window.jsonReceita;
     if (document.getElementById('filterRec').checked) {
         if (typeof jsonReceita === 'undefined') {
-            $.getJSON('../js/testesJson/testeJsonReceitas.json', function (jsonObjectReceitas) {
+            $.getJSON(listReceita, function (jsonObjectReceitas) {
                 jsonReceita = jsonObjectReceitas;
                 search();
             })
@@ -56,7 +56,7 @@ function search() {
         var mostraSearch = document.getElementById('listaSearch');
         mostraSearch.style.display = 'block';
 
-        // ============ Busca Ingredientes ============
+        // ============ Busca Ingredientes ============ //
         if (document.getElementById('filterIng').checked) {
             // limpa a thead da pesquisa passada
             $('.thead_busca').remove();
@@ -101,12 +101,12 @@ function search() {
                     $('<td><a href="#" class="hipertextColor" >' + value.nome_ingrediente + '</a></td>').appendTo(htmlIngList);
                     $('<td>' + value.quantidade_calorica_ingrediente + '</td>').appendTo(htmlIngList);
                     $('<td>' + value.aproveitamento_ingrediente + '</td>').appendTo(htmlIngList);
-                    $('<td>' + value.valor_total_ingrediente + '</td>').appendTo(htmlIngList);
+                    $('<td>' + value.valor_ingrediente + '</td>').appendTo(htmlIngList);
                     $('<td>' + value.quantidade_estoque_ingrediente + '</td>').appendTo(htmlIngList);
 
                     $.each(jsonUnidade, function (indexUnidade, valUnidade) {
                         if (valUnidade.id_unidade_medida == value.id_unidade_medida) {
-                            $('<td>' + valUnidade.descricao_unidade_medida + '</td>').appendTo(htmlIngList);
+                            $('<td>' + valUnidade.simbolo_unidade_medida + '</td>').appendTo(htmlIngList);
                         }
                     })
 
@@ -119,7 +119,7 @@ function search() {
             })
         }
 
-        // ============ Busca Receitas ============
+        // ============ Busca Receitas ============ //
         if (document.getElementById('filterRec').checked) {
             // limpa a thead da pesquisa passada
             $('.thead_busca').remove();
@@ -156,14 +156,14 @@ function search() {
 
 $('#search-btn').on('click', function () {
     if (document.getElementById('filterRec').checked) {
-        $.getJSON('../js/testesJson/testeJsonReceitas.json', function (jsonObjectReceitas) {
+        $.getJSON(listReceita, function (jsonObjectReceitas) {
             window.jsonReceita;
             jsonReceita = jsonObjectReceitas;
             search();
         })
     }
     if (document.getElementById('filterIng').checked) {
-        $.getJSON('../js/testesJson/testeJsonIngredientes.json', function (jsonObjectIngrediente) {
+        $.getJSON(listIngrediente, function (jsonObjectIngrediente) {
             window.jsonIngrediente;
             jsonIngrediente = jsonObjectIngrediente;
             search();
