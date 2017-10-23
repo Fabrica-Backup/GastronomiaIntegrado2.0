@@ -5,11 +5,11 @@ window.jsonUnidade;
 
 // get da tabela de ingredientes
 if (typeof jsonIngrediente === 'undefined' || typeof jsonObjectUnidade === 'undefined') {
-    $.getJSON('http://localhost:8000/api/ingredientes/list', function (jsonObjectIngrediente) {
+    $.getJSON(listIngrediente, function (jsonObjectIngrediente) {
         jsonIngrediente = jsonObjectIngrediente;
 
         // get da tabela de unidades
-        $.getJSON('http://localhost:8000/api/unidadesmedida/list', function (jsonObjectUnidade) {
+        $.getJSON(listUnidadeMedida, function (jsonObjectUnidade) {
             jsonUnidade = jsonObjectUnidade;
             mostraIngredientes();
         })
@@ -31,7 +31,6 @@ function mostraIngredientes() {
         $.each(jsonUnidade, function (indexUnidade, valUnidade) {
             // compara as id de unidade das tabelas ingredientes e unidade e armazena a key 'descricao' da tabela unidade na variavel unidade
             if (valUnidade.id_unidade_medida == valIngrediente.id_unidade_medida) {
-                var unidade = valUnidade.simbolo_unidade_medida;
 
                 // cria a 'tr' de cada ingrediente para ficar em formato de lista
                 var htmlList = $('<tr class="id-ingrediente" data-id="' + valIngrediente.id_ingrediente + '"></tr>');
@@ -42,7 +41,7 @@ function mostraIngredientes() {
                 $('<td class="aproveitamento">' + valIngrediente.aproveitamento_ingrediente + '</td>').appendTo(htmlList);
                 $('<td class="valor_ingrediente"> R$ ' + valIngrediente.valor_ingrediente + '</td>').appendTo(htmlList);
                 $('<td class="quantidade_estoque">' + valIngrediente.quantidade_estoque_ingrediente + '</td>').appendTo(htmlList);
-                $('<td class="unidade_medida">' + unidade + '</td>').appendTo(htmlList);
+                $('<td class="unidade_medida">' + valUnidade.simbolo_unidade_medida + '</td>').appendTo(htmlList);
                 $(botaoAdd).appendTo(htmlList);
                 $(botaoSubtract).appendTo(htmlList);
                 $(botaoEditar).appendTo(htmlList);
@@ -58,20 +57,21 @@ function mostraIngredientes() {
 function postJson() {
     // seleciona o formulario, vai ser enviado serializado em 'data'
     var form = $('#form-addIngrediente');
-    console.log(form.serialize())
     // pega id do ingrediente (se vazio = POST, se tem algo = PUT)
-    var id = $('.id').val();
+    idData = $('.id').val();
 
     // serializa o formulario
     var formArray = form.serializeArray();
 
-    if (typeof id === 'undefined') {
-        var urlData = "http://localhost:8000/api/ingredientes/create/";
+    load_url();
+
+    if (idData == 0) {
+        var urlData = createIngrediente;
     } else {
-        var urlData = "http://localhost:8000/api/ingredientes/edit/" + id + "";
+        var urlData = updateIngrediente;
 
         $.each(jsonIngrediente, function (indexIngrediente, valIngrediente) {
-            if (valIngrediente.id_ingrediente == id) {
+            if (valIngrediente.id_ingrediente == idData) {
                 formArray.push({
                     name: 'valor_ingrediente',
                     value: '' + valIngrediente.valor_ingrediente + ''
@@ -87,8 +87,6 @@ function postJson() {
         type: "POST",
         url: urlData,
         dataType: "json",
-        // contentType: "application/json; charset=utf-8",
-        // headers: { "X-HTTP-Method-Override": "PUT" },
         data: formArray,
         success: function () {
             $('.aulas').modal("hide");
@@ -113,19 +111,20 @@ $('.lista-ingredientes').on('click', '.excluir_ing', function () {
     // seleciona a 'tr' do ingrediente especifico
     var thisTr = $(this).closest('tr');
     // pega a id do ingrediente localizado no html
-    var idData = thisTr.data('id');
-    excluir_ingrediente(idData, thisTr);
+    idData = thisTr.data('id');
+    excluir_ingrediente(thisTr);
 });
 
 $('#listaSearch').on('click', '.excluir_ing', function () {
     // seleciona a 'tr' do ingrediente especifico
     var thisTr = $(this).closest('tr');
     // pega a id do ingrediente localizado no html
-    var idData = thisTr.data('id');
-    excluir_ingrediente(idData, thisTr);
+    idData = thisTr.data('id');
+    excluir_ingrediente(thisTr);
 })
 
-function excluir_ingrediente(idData, thisTr) {
+function excluir_ingrediente(thisTr) {
+    load_url();
     swal({
             title: "Tem certeza que deseja deletar este ingrediente?",
             type: "warning",
@@ -135,7 +134,7 @@ function excluir_ingrediente(idData, thisTr) {
             closeOnConfirm: false,
         },
         function () {
-            $.ajax('http://localhost:8000/api/ingredientes/delete/' + idData + '', {
+            $.ajax(deleteIngrediente, {
                 type: 'DELETE',
                 data: {
                     "id_ingrediente": idData

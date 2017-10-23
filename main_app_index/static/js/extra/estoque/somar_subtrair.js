@@ -15,11 +15,11 @@ function getThingsSoma() {
     window.jsonIngrediente;
     window.jsonUnidade;
     if (typeof jsonIngrediente === 'undefined' || typeof jsonUnidade === 'undefined') {
-        $.getJSON('http://localhost:8000/api/ingredientes/list', function (jsonObjectIngrediente) {
+        $.getJSON(listIngrediente, function (jsonObjectIngrediente) {
             jsonIngrediente = jsonObjectIngrediente;
 
             // get da tabela de unidades
-            $.getJSON('http://localhost:8000/api/unidadesmedida/list', function (jsonObjectUnidade) {
+            $.getJSON(listUnidadeMedida, function (jsonObjectUnidade) {
                 jsonUnidade = jsonObjectUnidade;
                 addButton();
             })
@@ -134,12 +134,14 @@ function postAdd() {
     // seleciona o formulario, vai ser enviado serializado em 'data'
     var formSoma = $('#formSomar');
     // seleciona o id do ingrediente 'hidden' localizado no html
-    var idAdd = $('#idSoma').val();
+    idData = $('#idSoma').val();
+
+    load_url();
 
     var formSomaArray = formSoma.serializeArray();
     console.log(formSomaArray)
     $.each(jsonIngrediente, function (indexIngrediente, valIngrediente) {
-        if (valIngrediente.id_ingrediente == idAdd) {
+        if (valIngrediente.id_ingrediente == idData) {
             formSomaArray.push({
                 name: 'nome_ingrediente',
                 value: '' + valIngrediente.nome_ingrediente + ''
@@ -158,7 +160,7 @@ function postAdd() {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8000/api/ingredientes/edit/" + idAdd + "",
+        url: updateIngrediente,
         dataType: "json",
         data: formSomaArray,
 
@@ -271,12 +273,14 @@ function postSub() {
     var formSubtrair = $('#formSubtrair');
 
     // seleciona o id do ingrediente 'hidden' localizado no html
-    var idSub = $('#idSub').val();
+    idData = $('#idSub').val();
+
+    load_url();
 
     var formSubtrairArray = formSubtrair.serializeArray();
 
     $.each(jsonIngrediente, function (indexIngrediente, valIngrediente) {
-        if (valIngrediente.id_ingrediente == idSub) {
+        if (valIngrediente.id_ingrediente == idData) {
             formSubtrairArray.push({
                 name: 'nome_ingrediente',
                 value: '' + valIngrediente.nome_ingrediente + ''
@@ -290,15 +294,15 @@ function postSub() {
                 name: 'id_unidade_medida',
                 value: '' + valIngrediente.id_unidade_medida + ''
             }, {
-                name: 'valor_unidade',
-                value: '' + valIngrediente.valor_unidade + ''
+                name: 'valor_ingrediente',
+                value: '' + valIngrediente.valor_ingrediente + ''
             })
         }
     })
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8000/api/ingredientes/edit/" + idSub + "",
+        url: updateIngrediente,
         dataType: "json",
         data: formSubtrairArray,
 
