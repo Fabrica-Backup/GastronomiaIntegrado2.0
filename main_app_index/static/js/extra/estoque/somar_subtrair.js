@@ -151,9 +151,6 @@ function postAdd() {
             }, {
                 name: 'aproveitamento_ingrediente',
                 value: '' + valIngrediente.aproveitamento_ingrediente + ''
-            }, {
-                name: 'id_unidade_medida',
-                value: '' + valIngrediente.id_unidade_medida + ''
             })
         }
     })
@@ -255,13 +252,16 @@ function converteUnidadeSub() {
     var unidadeSelecionado = $('#unidadeMedidaSubtrai').find('option:selected').val();
     var qtdSubtrai = $('.qtdSubtrai').val();
 
-    if (unidadeSelecionado == '1' || unidadeSelecionado == '2' || unidadeSelecionado == '4') {
+    if (unidadeSelecionado == '1') {
+        valorTransformado = qtdSubtrai;
+    }
+    if (unidadeSelecionado == '2' || unidadeSelecionado == '4') {
         valorTransformado = qtdSubtrai;
     }
     if (unidadeSelecionado == '3' || unidadeSelecionado == '5') {
         valorTransformado = qtdSubtrai / 1000;
     }
-    $('.subTransformado').html('<input type="text" name="quantidade_estoque_ingrediente" value="' + valorTransformado + '"hidden/>')
+    $('.subTransformado').html('<input type="text" name="quantidade_estoque_ingrediente" value="-' + valorTransformado + '"hidden/>')
 }
 
 
@@ -291,15 +291,13 @@ function postSub() {
                 name: 'aproveitamento_ingrediente',
                 value: '' + valIngrediente.aproveitamento_ingrediente + ''
             }, {
-                name: 'id_unidade_medida',
-                value: '' + valIngrediente.id_unidade_medida + ''
-            }, {
                 name: 'valor_ingrediente',
                 value: '' + valIngrediente.valor_ingrediente + ''
             })
         }
     })
 
+    console.log(formSubtrairArray)
     $.ajax({
         type: "POST",
         url: updateIngrediente,

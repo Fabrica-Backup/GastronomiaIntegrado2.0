@@ -9,9 +9,9 @@ function getIngredientes() {
     window.jsonUnidade;
     if (document.getElementById('filterIng').checked) {
         if (typeof jsonIngrediente === 'undefined' || typeof jsonUnidade === 'undefined') {
-            $.getJSON('../js/testesJson/testeJsonIngredientes.json', function (jsonObjectIngrediente) {
+            $.getJSON(listIngrediente, function (jsonObjectIngrediente) {
                 jsonIngrediente = jsonObjectIngrediente;
-                $.getJSON('../js/testesJson/testeJsonUnidade.json', function (jsonObjectUnidade) {
+                $.getJSON(listUnidadeMedida, function (jsonObjectUnidade) {
                     jsonUnidade = jsonObjectUnidade;
                     search();
                 })
@@ -27,7 +27,7 @@ function getReceitas() {
     window.jsonReceita;
     if (document.getElementById('filterRec').checked) {
         if (typeof jsonReceita === 'undefined') {
-            $.getJSON('../js/testesJson/testeJsonReceitas.json', function (jsonObjectReceitas) {
+            $.getJSON(listReceita, function (jsonObjectReceitas) {
                 jsonReceita = jsonObjectReceitas;
                 search();
             })
@@ -156,14 +156,14 @@ function search() {
 
 $('#search-btn').on('click', function () {
     if (document.getElementById('filterRec').checked) {
-        $.getJSON('../js/testesJson/testeJsonReceitas.json', function (jsonObjectReceitas) {
+        $.getJSON(listReceita, function (jsonObjectReceitas) {
             window.jsonReceita;
             jsonReceita = jsonObjectReceitas;
             search();
         })
     }
     if (document.getElementById('filterIng').checked) {
-        $.getJSON('../js/testesJson/testeJsonIngredientes.json', function (jsonObjectIngrediente) {
+        $.getJSON(listIngrediente, function (jsonObjectIngrediente) {
             window.jsonIngrediente;
             jsonIngrediente = jsonObjectIngrediente;
             search();

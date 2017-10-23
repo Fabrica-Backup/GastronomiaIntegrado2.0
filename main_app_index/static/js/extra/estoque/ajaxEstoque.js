@@ -77,12 +77,12 @@ function postJson() {
                     value: '' + valIngrediente.valor_ingrediente + ''
                 }, {
                     name: 'quantidade_estoque_ingrediente',
-                    value: '' + valIngrediente.quantidade_estoque_ingrediente + ''
+                    value: 0
                 })
             }
         })
     }
-    console.log(form.serializeArray())
+    console.log(formArray)
     $.ajax({
         type: "POST",
         url: urlData,

@@ -80,7 +80,9 @@ function jsonPost() {
     var form = $('#form_addAula');
 
     // pega id da aula (se vazio = POST, se tem algo = PUT)
-    var idData = $(this).closest('form').find('.id_aula').val();
+    idData = $(this).closest('form').find('.id_aula').val();
+
+    load_url();
 
     if (idData == 0) {
         var urlData = createAula;
@@ -105,8 +107,11 @@ function jsonPost() {
 // ===================== MARCAR AULA COMO AGENDADA ===================== //
 $('#addReceita').on('click', '#agendarButton', function () {
     // pega id da receita
-    var idData = $(this).closest('#form_addAula').find('.id_aula').data('id');
-    var urlData = "http://httpbin.org/post/" + id + "";
+    idData = $(this).closest('#form_addAula').find('.id_aula').data('id');
+
+    load_url();
+
+    var urlData = updateAula;
 
     $.ajax(urlData, {
         type: 'POST',
@@ -135,9 +140,10 @@ $('#addReceita').on('click', '#agendarButton', function () {
 // ===================== MARCAR COMO AULA CONCLUIDA ===================== //
 $('.aulas').on('click', '.botaoAulaConcluida', function () {
     // pega id da receita
-    var id = $(this).closest('tr').data('id');
+    idData = $(this).closest('tr').data('id');
 
     load_url();
+
     var urlData = updateAula;
 
     swal({
@@ -177,7 +183,10 @@ $('.aulas').on('click', '.botaoAulaConcluida', function () {
 // ===================== DELETE ===================== //
 $('.aulas').on('click', '.excluir', function () {
     var thisTr = $(this).closest('tr');
-    var idData = thisTr.data('id');
+    idData = thisTr.data('id');
+
+    load_url();
+
     swal({
             title: "Tem certeza que deseja deletar esta aula?",
             type: "warning",

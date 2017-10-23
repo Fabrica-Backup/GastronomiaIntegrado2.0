@@ -8,7 +8,7 @@ window.listUnidadeMedida = 'http://localhost:8000/api/unidadesmedida/list';
 // aula
 window.listAula = '../js/testesJson/testeJsonAula.json';
 
-// receitas
+// receita
 window.listReceita = '../js/testesJson/testeJsonReceitas.json';
 
 // associativa aula_receita

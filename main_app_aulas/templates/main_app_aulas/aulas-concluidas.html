@@ -24,8 +24,10 @@
     <div class="wrapper">
         <header class="main-header">
             <a href="http://localhost:8000" class="logo">
-                <span class="logo-mini"><b>G</b>O</span>
-                <span class="logo-lg"><b>Gastronomia</b>Opet</span>
+                <span class="logo-mini">
+                    <b>G</b>O</span>
+                <span class="logo-lg">
+                    <b>Gastronomia</b>Opet</span>
             </a>
             <nav class="navbar navbar-static-top">
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -56,12 +58,14 @@
             <!-- Search -->
             <div class="btn-group sidebar-form">
                 <div class="input-group" data-toggle="dropdown">
-                    <input type="text" class="dropdown-toggle form-control" id="myInput" aria-haspopup="true" aria-expanded="false" placeholder="Procurar.." onkeyup="search()">
+                    <input type="text" class="dropdown-toggle form-control" id="myInput" aria-haspopup="true" aria-expanded="false" placeholder="Procurar.."
+                        onkeyup="search()">
                     </input>
                     <span class="input-group-btn">
-                                <button type="button" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                                </button>
-                            </span>
+                        <button type="button" name="search" id="search-btn" class="btn btn-flat">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
                 </div>
                 <ul class="dropdown-menu">
                     <li>
@@ -80,29 +84,39 @@
                 <li class="header">MAIN NAVIGATION</li>
                 <li class="treeview">
                     <a href="http://localhost:8000">
-                        <i class="fa fa-bar-chart-o"></i><span>Dashboard</span>
+                        <i class="fa fa-bar-chart-o"></i>
+                        <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="treeview">
                     <a href="http://localhost:8000/receitas">
-                        <i class="fa fa-book"></i><span>Receitas</span>
+                        <i class="fa fa-book"></i>
+                        <span>Receitas</span>
                     </a>
                 </li>
                 <li class="treeview">
                     <a href="http://localhost:8000/estoque">
-                        <i class="fa fa-cubes"></i><span>Estoque</span>
+                        <i class="fa fa-cubes"></i>
+                        <span>Estoque</span>
                     </a>
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-calendar"></i><span>Aula</span>
+                        <i class="fa fa-calendar"></i>
+                        <span>Aula</span>
                         <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="http://localhost:8000/planejar_aulas"><i class="fa fa-circle-o"></i>Planejar Aulas</a></li>
-                        <li><a href="http://localhost:8000/aulas_concluidas"><i class="fa fa-circle-o"></i>Aulas Concluidas</a></li>
+                        <li>
+                            <a href="http://localhost:8000/planejar_aulas">
+                                <i class="fa fa-circle-o"></i>Planejar Aulas</a>
+                        </li>
+                        <li>
+                            <a href="http://localhost:8000/aulas_concluidas">
+                                <i class="fa fa-circle-o"></i>Aulas Concluidas</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -340,6 +354,7 @@
         </div>
     </div>
     <!-- FIM MODAL DETALHES DA AULA -->
+    <script src="{% static '/js/urls.js' %}"></script>
     <!-- jQuery 2.2.3 -->
     <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
