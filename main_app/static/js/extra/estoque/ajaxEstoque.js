@@ -31,7 +31,6 @@ function mostraIngredientes() {
         $.each(jsonUnidade, function (indexUnidade, valUnidade) {
             // compara as id de unidade das tabelas ingredientes e unidade e armazena a key 'descricao' da tabela unidade na variavel unidade
             if (valUnidade.id_unidade_medida == valIngrediente.id_unidade_medida) {
-                var unidade = valUnidade.simbolo_unidade_medida;
 
                 // cria a 'tr' de cada ingrediente para ficar em formato de lista
                 var htmlList = $('<tr class="id-ingrediente" data-id="' + valIngrediente.id_ingrediente + '"></tr>');
@@ -42,7 +41,7 @@ function mostraIngredientes() {
                 $('<td class="aproveitamento">' + valIngrediente.aproveitamento_ingrediente + '</td>').appendTo(htmlList);
                 $('<td class="valor_ingrediente"> R$ ' + valIngrediente.valor_ingrediente + '</td>').appendTo(htmlList);
                 $('<td class="quantidade_estoque">' + valIngrediente.quantidade_estoque_ingrediente + '</td>').appendTo(htmlList);
-                $('<td class="unidade_medida">' + unidade + '</td>').appendTo(htmlList);
+                $('<td class="unidade_medida">' + valUnidade.simbolo_unidade_medida + '</td>').appendTo(htmlList);
                 $(botaoAdd).appendTo(htmlList);
                 $(botaoSubtract).appendTo(htmlList);
                 $(botaoEditar).appendTo(htmlList);

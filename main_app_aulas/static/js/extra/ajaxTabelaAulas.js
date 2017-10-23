@@ -1,5 +1,5 @@
-// ==================== GET ===================== //
-$(document).ready(function () {
+﻿// ==================== GET ===================== //
+$(document).ready(function() {
     // armazena os objetos json de receitas, aulas, e unidade para ser usado em outros locais
     window.jsonReceita;
     window.jsonAula;
@@ -8,13 +8,13 @@ $(document).ready(function () {
     // verifica se foi dado get das receitas, aulas e periodo, caso nao tenha dado ele dará get aqui
     if (typeof jsonAula === 'undefined' || typeof jsonReceita === 'undefined' || typeof jsonPeriodo === 'undefined') {
         // get da tabela de aulas 
-        $.getJSON('../js/testesJson/testeJsonAula.json', function (jsonObjectAula) {
+        $.getJSON('../js/testesJson/testeJsonAula.json', function(jsonObjectAula) {
             jsonAula = jsonObjectAula;
             // get da tabela de receitas
-            $.getJSON('../js/testesJson/testeJsonReceitas.json', function (jsonObjectReceita) {
+            $.getJSON('../js/testesJson/testeJsonReceitas.json', function(jsonObjectReceita) {
                 jsonReceita = jsonObjectReceita;
                 // get da tabela associativa aula_receita
-                $.getJSON('../js/testesJson/testeJsonAulaReceita.json', function (jsonObjectAulaReceita) {
+                $.getJSON('../js/testesJson/testeJsonAulaReceita.json', function(jsonObjectAulaReceita) {
                     jsonAulaReceita = jsonObjectAulaReceita;
                     getTabela(jsonAula, jsonReceita, jsonAulaReceita);
                 })
@@ -33,17 +33,18 @@ function getTabela(jsonAula, jsonReceita, jsonAulaReceita) {
     var botaoAulaConcluida = '<td><button class="botaoAulaConcluida" type="button">Aula Concluida</button></td>';
     var botaoDetalhes = '<td><button type="button" class="btn btn-xs botaoDetalhes"><i class="fa fa-eye"></i></button></td>';
 
-    $.each(jsonAula, function (indexAula, valAula) {
-        $.each(jsonAulaReceita, function (indexAulaReceitas, valueAulaReceitas) {
+    $.each(jsonAula, function(indexAula, valAula) {
+        $.each(jsonAulaReceita, function(indexAulaReceitas, valueAulaReceitas) {
             if (valAula.id_aula == valueAulaReceitas.id_aula) {
                 // conta o numero de receitas na aula
-                var countReceitas = Object.keys(valueAulaReceitas.id_receita).length;
+                var countReceitas = Object.keys(valueAulaReceitas.receita).length;
 
                 // cria a 'tr' de cada aula para ficar em formato de lista
                 var htmlList = $('<tr class="id-aula" data-id="' + valAula.id_aula + '"></tr>');
 
                 // cria as 'td' com os valores da aula E joga as 'td' dentro da 'tr' htmlList (<tr><td>  </td></tr>)
                 $('<td hidden class="id_aula">' + valAula.id_aula + '</td>').appendTo(htmlList);
+                $('<td class="nome_aula">' + valAula.nome_aula + '</td>').appendTo(htmlList);
                 $('<td class="dia_da_aula">' + valAula.data_aula + '</td>').appendTo(htmlList);
                 $('<td class="periodo">' + valAula.periodo_aula + '</td>').appendTo(htmlList);
                 $('<td class="num_receitas">' + countReceitas + '</td>').appendTo(htmlList);
@@ -90,17 +91,17 @@ function jsonPost() {
         url: urlData,
         dataType: "json",
         data: form.serialize(),
-        success: function () {
+        success: function() {
             $('#mensagens-sucesso').append('DEU CERTO PORRA!!');
         },
-        error: function () {
+        error: function() {
             $('#mensagens-erro').append('AFFE CAGO!!');
         },
     });
 };
 
 // ===================== MARCAR AULA COMO AGENDADA ===================== //
-$('#addReceita').on('click', '#agendarButton', function () {
+$('#addReceita').on('click', '#agendarButton', function() {
     // pega id da receita
     var id = $(this).closest('#form_addAula').find('.id_aula').data('id');
     var urlData = "http://httpbin.org/post/" + id + "";
@@ -111,14 +112,14 @@ $('#addReceita').on('click', '#agendarButton', function () {
             aula_agendada: 'true'
         },
         dataType: 'json',
-        success: function () {
+        success: function() {
             swal({
                     title: "Aula Agendada com SUCESSO!",
                     type: "success",
                 }),
                 $('#addReceita').modal('hide');
         },
-        error: function () {
+        error: function() {
             swal({
                 title: "Problemas para Agendar a aula",
                 type: "error",
@@ -130,7 +131,7 @@ $('#addReceita').on('click', '#agendarButton', function () {
 })
 
 // ===================== MARCAR COMO AULA CONCLUIDA ===================== //
-$('.aulas').on('click', '.botaoAulaConcluida', function () {
+$('.aulas').on('click', '.botaoAulaConcluida', function() {
     // pega id da receita
     var id = $(this).closest('tr').data('id');
     var urlData = "http://httpbin.org/post/" + id + "";
@@ -142,21 +143,21 @@ $('.aulas').on('click', '.botaoAulaConcluida', function () {
             confirmButtonText: "Sim",
             closeOnConfirm: false,
         },
-        function () {
+        function() {
             $.ajax(urlData, {
                 type: 'POST',
                 data: {
                     aula_concluida: 'true'
                 },
                 dataType: 'json',
-                success: function () {
+                success: function() {
                     swal({
                             title: "Aula Concluida!",
                             type: "success",
                         }),
                         $(thisTr).remove();
                 },
-                error: function () {
+                error: function() {
                     swal({
                         title: "Problemas para concluir a aula",
                         type: "error",
@@ -170,7 +171,7 @@ $('.aulas').on('click', '.botaoAulaConcluida', function () {
 });
 
 // ===================== DELETE ===================== //
-$('.aulas').on('click', '.excluir', function () {
+$('.aulas').on('click', '.excluir', function() {
     var thisTr = $(this).closest('tr');
     var idData = thisTr.data('id');
     swal({
@@ -181,21 +182,21 @@ $('.aulas').on('click', '.excluir', function () {
             confirmButtonText: "Deletar!",
             closeOnConfirm: false,
         },
-        function () {
+        function() {
             $.ajax('http://httpbin.org/delete', {
                 type: 'DELETE',
                 data: {
                     "id_aula": idData
                 },
                 dataType: 'json',
-                success: function () {
+                success: function() {
                     swal({
                             title: "Aula removido com sucesso!",
                             type: "success",
                         }),
                         $(thisTr).remove();
                 },
-                error: function () {
+                error: function() {
                     swal({
                         title: "Problemas ao remover a aula",
                         type: 'error',
@@ -207,10 +208,10 @@ $('.aulas').on('click', '.excluir', function () {
 });
 
 // ==================== CLONAR AULA ==================== //
-$('#verAula').on('click', '.clonar', function () {
+$('#verAula').on('click', '.clonar', function() {
     // xunxo para pegar a id da aula
     var idAula = $(this).closest('.modal-body').find('.receitasQuantidade').find('tr').data('id');
-    $.each(jsonAula, function (indexAula, valueAula) {
+    $.each(jsonAula, function(indexAula, valueAula) {
         if (valueAula.id_aula == idAula) {
             var objClone = new Object();
             objClone.id_aula = '';
@@ -220,7 +221,7 @@ $('#verAula').on('click', '.clonar', function () {
             objClone.aula_agendada = 'false';
             objClone.receitas = [];
 
-            $.each(valueAula.receitas, function (indexAulaReceitas, valueAulaReceitas) {
+            $.each(valueAula.receitas, function(indexAulaReceitas, valueAulaReceitas) {
                 objClone.receitas.push(valueAulaReceitas);
             })
             var objCloneStringfy = JSON.stringify(objClone);
@@ -237,12 +238,12 @@ function jsonClone(objCloneStringfy) {
             confirmButtonText: "Clonar",
             closeOnConfirm: false,
         },
-        function () {
+        function() {
             $.ajax('http://httpbin.org/post', {
                 type: 'POST',
                 data: objCloneStringfy,
                 dataType: 'json',
-                success: function () {
+                success: function() {
                     swal({
                         title: 'Aula clonado com sucesso!',
                         text: 'Clone está localizado em Planejar Aulas',
@@ -250,7 +251,7 @@ function jsonClone(objCloneStringfy) {
                         confirmButtonText: "Ok",
                     });
                 },
-                error: function () {
+                error: function() {
                     swal({
                         title: "Problemas ao clonar aula",
                         type: "warning",
