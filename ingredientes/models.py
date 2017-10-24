@@ -11,5 +11,5 @@ class Ingrediente(models.Model):
     quantidade_reservada_ingrediente = models.DecimalField(max_digits = 12, decimal_places = 2, default = 0)
     valor_ingrediente = models.DecimalField(max_digits = 12, decimal_places = 2, default = 0) 
     motivo_retirada_estoque = models.CharField(max_length = 200 , null = True)
-    id_unidade_medida = models.ForeignKey(UnidadeMedida, related_name = 'id_unidades_medida', on_delete = models.CASCADE)
+    id_unidade_medida = models.ForeignKey(UnidadeMedida, null=True, related_name = 'id_unidades_medida', on_delete = models.CASCADE)
 

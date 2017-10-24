@@ -37,7 +37,6 @@ class EditIngrediente(APIView):
     def post(self, request, id, format=None):
         serializer = self.serializer_class(Ingrediente.objects.get(id_ingrediente=id), data=request.data)
         print(id)
-
         if serializer.is_valid():
             print("salvando")
             serializer.save()
@@ -46,6 +45,7 @@ class EditIngrediente(APIView):
 
         print("serializer errado")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class DeleteIngrediente(APIView):
