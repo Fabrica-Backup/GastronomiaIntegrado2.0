@@ -108,7 +108,7 @@ function calculaPreco() {
     if (unidadeSelecionado == '3' || unidadeSelecionado == '5') {
         valorTransformado = qtdSoma / 1000;
     }
-    $('.inputValorTransformado').html('<input type="hidden" name="quantidade_estoque_ingrediente" class="form-control valorTransformado" placeholder="Quantidade" value="' + valorTransformado + '">');
+    $('.inputValorTransformado').html('<input type="hidden" name="quantidade_estoque_ingrediente" class="form-control valorTransformado" placeholder="Quantidade" value="+' + valorTransformado + '">');
 
     // pega os valores inseridos na modal
     var qtdIngrediente = $('.valorTransformado').val();
